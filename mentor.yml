@@ -11,7 +11,7 @@
     - debug: msg="{{ slurpfile['content'] | b64decode }}"
     #- debug: msg="the value of foo.txt is {{ contents }}"
     - name: Run vault credentials
-      shell: "curl --location --request GET 'http://34.126.65.231:8200/v1/elevate/data/mentoring' --header 'X-Vault-Token: {{ slurpfile['content'] | b64decode }}' | jq '.data' > '{{ project_path 
+      shell: "curl --location --request GET ' {{ vaultAddress }} /v1/elevate/data/mentoring' --header 'X-Vault-Token: {{ slurpfile['content'] | b64decode }}' | jq '.data' > '{{ project_path 
 }}/data2.json'"
       register: vaultcurl
     - debug: msg=" cred {{ vaultcurl }} "
@@ -36,8 +36,6 @@
         repo: https://github.com/ELEVATE-Project/mentoring.git
         dest: "{{ release_path }}"
         version: dev
-#    - name: Run expect to wait for a successful PXE boot via out-of-band CIMC
- #     shell: "curl --location --request GET 'http://34.126.65.231:8200/v1/elevate/data/user_service' --header 'X-Vault-Token: {{ slurpfile['content'] | b64decode }}' | jq '.data' > '{{ project_path }}/current/data2.json'"
     - name: Update npm
       shell: cd {{release_path}}/src && npm i
      # npm:
